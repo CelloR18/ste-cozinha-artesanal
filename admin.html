@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Controle de Produtos - Sté Confeitaria</title>
+  <title>Controle de Produtos</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -29,16 +29,23 @@
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center space-x-2">
-            <img src="images/ste-logo.png" alt="Logo Sté Confeitaria" class="h-10">
+            <img src="./ste-logo.png" alt="Logo Sté Confeitaria" class="h-10">
             <span class="text-xl font-bold">Controle de Produtos</span>
           </div>
           <div>
-            <a href="index.html" class="bg-white text-[#B14444] px-4 py-2 rounded-full hover:bg-gray-100 transition">
-              <i class="fas fa-home mr-2"></i>Voltar ao Site
-            </a>
+            
           </div>
         </div>
       </div>
+      <!-- Adicione isso na barra de navegação do admin.html -->
+<div class="flex items-center space-x-4">
+  <button id="logout-btn" class="bg-white text-[#B14444] px-4 py-2 rounded-full hover:bg-gray-100 transition">
+    <i class="fas fa-sign-out-alt mr-2"></i> Sair
+  </button>
+  <a href="index.html" class="bg-white text-[#B14444] px-4 py-2 rounded-full hover:bg-gray-100 transition">
+    <i class="fas fa-home mr-2"></i> Voltar ao Site
+  </a>
+</div>
     </nav>
 
     <!-- Conteúdo principal -->
@@ -279,5 +286,21 @@
       loadProducts();
     });
   </script>
+  <script>
+  // Verificar se está autenticado
+  if (sessionStorage.getItem('adminAuthenticated') !== 'true') {
+    window.location.href = 'index.html';
+  }
+
+  // Botão de logout
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    sessionStorage.removeItem('adminAuthenticated');
+    window.location.href = 'index.html';
+  });
+</script>
+<button id="logout-btn" class="bg-white text-[#B14444] px-4 py-2 rounded-full hover:bg-gray-100 transition">
+  <i class="fas fa-sign-out-alt mr-2"></i>Sair
+</button>
+
 </body>
 </html>

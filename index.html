@@ -32,6 +32,11 @@
       transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
+    .transition-colors {
+  transition: background-color 0.3s ease;
+}
+
+/* Adicione isso no seu <style> ou arquivo CSS */
   </style>
 </head>
 
@@ -451,10 +456,34 @@
       </div>
     </div>
   </div>
-  <button id="admin-access-btn"
-    class="fixed bottom-4 left-4 bg-[#B14444] text-white p-3 rounded-full z-50 hover:bg-[#a03838] transition shadow-lg">
-    <i class="fas fa-lock"></i> Admin
-  </button>
+  <div id="admin-login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-[#B14444]">Acesso Administrativo</h3>
+      <button id="close-admin-login" class="text-gray-500 hover:text-[#B14444]">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form id="admin-login-form" class="space-y-4">
+      <div>
+        <label for="admin-username" class="block mb-1 font-medium">Usuário</label>
+        <input type="text" id="admin-username" required 
+               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#B14444]">
+      </div>
+      <div>
+        <label for="admin-password" class="block mb-1 font-medium">Senha</label>
+        <input type="password" id="admin-password" required 
+               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#B14444]">
+      </div>
+      <button type="submit" class="w-full bg-[#B14444] text-white py-2 rounded-lg hover:bg-[#a03838] transition">
+        Entrar
+      </button>
+    </form>
+  </div>
+</div>
+<button id="admin-access-btn" class="fixed bottom-4 left-4 bg-[#B14444] text-white p-3 rounded-full z-50 hover:bg-[#a03838] transition shadow-lg">
+  <i class="fas fa-lock"></i> Admin
+</button>
   <!-- Rodapé -->
   <footer class="bg-[#663333] text-white py-8">
     <div class="max-w-6xl mx-auto px-4">
@@ -466,13 +495,11 @@
           </div>
           <p class="mb-4">Doces artesanais premium feitos com ingredientes selecionados e muito amor.</p>
           <div class="flex space-x-4">
-            <a href="#" class="text-white hover:text-[#FCE8E4] transition">
+            <a href="https://www.instagram.com/stecozinhaartesanal/" class="text-white hover:text-[#FCE8E4] transition">
               <i class="fab fa-instagram text-xl"></i>
             </a>
-            <a href="#" class="text-white hover:text-[#FCE8E4] transition">
-              <i class="fab fa-facebook text-xl"></i>
-            </a>
-            <a href="https://wa.me/5518996193899" class="text-white hover:text-[#FCE8E4] transition">
+          
+            <a href="https://wa.me/5518981718571" class="text-white hover:text-[#FCE8E4] transition">
               <i class="fab fa-whatsapp text-xl"></i>
             </a>
           </div>
@@ -484,11 +511,9 @@
             <i class="fas fa-map-marker-alt mr-2"></i> Presidente Epitácio - SP
           </p>
           <p class="mb-2 flex items-center">
-            <i class="fab fa-whatsapp mr-2"></i> (18) 99999-9999
+            <i class="fab fa-whatsapp mr-2"></i> (18) 98171-8571
           </p>
-          <p class="flex items-center">
-            <i class="fas fa-envelope mr-2"></i> contato@steconfeitaria.com
-          </p>
+          
         </div>
       </div>
 
@@ -731,7 +756,7 @@
     }
 
     updateCartDisplay();
-    cartModal.classList.remove('hidden');
+   
   }
 
   // Atualizar exibição do carrinho
@@ -912,14 +937,97 @@
       alert(error.message);
     }
   }
+// Credenciais do admin
+const ADMIN_CREDENTIALS = {
+  username: "admin",
+  password: "ste123"
+};
+
+// Elementos do modal de login
+const adminLoginModal = document.getElementById('admin-login-modal');
+const adminLoginForm = document.getElementById('admin-login-form');
+const closeAdminLogin = document.getElementById('close-admin-login');
+const adminAccessBtn = document.getElementById('admin-access-btn');
+
+// Configurar eventos do admin
+function setupAdminLogin() {
+  // Abrir modal de login quando clicar no botão Admin
+  adminAccessBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    adminLoginModal.classList.remove('hidden');
+  });
+
+  // Fechar modal de login
+  closeAdminLogin.addEventListener('click', () => {
+    adminLoginModal.classList.add('hidden');
+  });
+
+  // Processar login
+  adminLoginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('admin-username').value.trim();
+    const password = document.getElementById('admin-password').value.trim();
+    
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+      // Salvar sessão (simplificado - em produção use métodos seguros)
+      sessionStorage.setItem('adminAuthenticated', 'true');
+      // Redirecionar para admin.html
+      window.location.href = 'admin.html';
+    } else {
+      alert('Usuário ou senha incorretos!');
+      document.getElementById('admin-password').value = '';
+    }
+  });
+}
+
+// Adicione esta função para verificar autenticação no admin.html
+function checkAdminAuth() {
+  if (window.location.pathname.includes('admin.html')) {
+    if (sessionStorage.getItem('adminAuthenticated') !== 'true') {
+      window.location.href = 'index.html';
+    }
+  }
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+  setupDatePicker();
+  loadVisibleProducts();
+  setupEventListeners();
+  setupAdminLogin();
+  checkAdminAuth(); // Verificar autenticação ao carregar qualquer página
+});
 </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
   <!-- No seu footer ou em outro local apropriado -->
-  <a href="admin.html"
-    class="fixed bottom-4 left-4 bg-gray-700 text-white p-3 rounded-full z-50 hover:bg-gray-800 transition">
-    <i class="fas fa-lock"></i> Área Admin
-  </a>
   
+  <!-- Modal de Login Admin -->
+<div id="admin-login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-bold text-[#B14444]">Acesso Administrativo</h3>
+      <button id="close-admin-login" class="text-gray-500 hover:text-[#B14444]">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <form id="admin-login-form" class="space-y-4">
+      <div>
+        <label for="admin-username" class="block mb-1 font-medium">Usuário</label>
+        <input type="text" id="admin-username" required 
+               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#B14444]">
+      </div>
+      <div>
+        <label for="admin-password" class="block mb-1 font-medium">Senha</label>
+        <input type="password" id="admin-password" required 
+               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#B14444]">
+      </div>
+      <button id="admin-access-btn" class="fixed bottom-4 left-4 bg-[#B14444] text-white p-3 rounded-full z-50 hover:bg-[#a03838] transition shadow-lg">
+  <i class="fas fa-lock"></i> Admin
+</button>
+    </form>
+  </div>
+</div>
 
 </body>
 
