@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Produtos - Sté Confeitaria</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .toggle-checkbox:checked {
+      @apply right-0 border-green-400;
+      right: 0;
+      border-color: #68D391;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      @apply bg-green-400;
+      background-color: #68D391;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen">
+    <!-- Barra de navegação -->
+    <nav class="bg-[#B14444] text-white shadow-md">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-2">
+            <img src="images/ste-logo.png" alt="Logo Sté Confeitaria" class="h-10">
+            <span class="text-xl font-bold">Controle de Produtos</span>
+          </div>
+          <div>
+            <a href="index.html" class="bg-white text-[#B14444] px-4 py-2 rounded-full hover:bg-gray-100 transition">
+              <i class="fas fa-home mr-2"></i>Voltar ao Site
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-[#B14444]">
+          <i class="fas fa-boxes mr-2"></i>Gerenciamento de Produtos
+        </h1>
+      </div>
+
+      <!-- Lista de produtos -->
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="p-3 text-left">Produto</th>
+                <th class="p-3 text-left">Categoria</th>
+                <th class="p-3 text-left">Preço</th>
+                <th class="p-3 text-left">Visível no Site</th>
+              </tr>
+            </thead>
+            <tbody id="products-list" class="divide-y divide-gray-200">
+              <!-- Produtos serão carregados aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Banco de dados de produtos
+    let products = [];
+
+    // Produtos padrão do index.html
+    const defaultProducts = [
+      {
+        id: 1,
+        name: "Copo Ferrero Rocher",
+        category: "Copos",
+        price: 17.00,
+        description: "Brigadeiro, amendoim, mousse de chocolate, nutella e brownie.",
+        image: "images/copo de ferreiro rocher.jpg",
+        visible: true
+      },
+      {
+        id: 2,
+        name: "Copo Ninho com Nutella",
+        category: "Copos",
+        price: 18.00,
+        description: "Creme de ninho, nutella, morango e uva verde sem semente.",
+        image: "images/copo de uva.jpg",
+        visible: true
+      },
+      {
+        id: 3,
+        name: "Coxinha de Morango com Ninho",
+        category: "Doces",
+        price: 11.00,
+        description: "Morango fresco envolvido no brigadeiro de ninho e enrolado no ninho.",
+        image: "images/coxinha de morango.jpg",
+        visible: true
+      },
+      {
+        id: 4,
+        name: "Caixa Box Bombom de Morango",
+        category: "Caixas",
+        price: 155.00,
+        description: "Ninho cremoso, morango, creme de chocolate, ganache ao leite e chantininho.",
+        image: "images/caixa box.jpg",
+        visible: true
+      },
+      {
+        id: 5,
+        name: "Morango do Amor",
+        category: "Doces",
+        price: 16.00,
+        description: "Morango, brigadeiro de ninho e calda crocante.",
+        image: "images/morango do amor.jpg",
+        visible: true
+      },
+      {
+        id: 6,
+        name: "Espeto de Morango",
+        category: "Espetos",
+        price: 16.00,
+        description: "Morango com chocolate ao leite nobre.",
+        image: "images/spetinho de morango.jpg",
+        visible: true
+      },
+      {
+        id: 7,
+        name: "Espeto de Uva",
+        category: "Espetos",
+        price: 16.00,
+        description: "Uva com chocolate ao leite nobre.",
+        image: "images/espetinho de uva.jpg",
+        visible: true
+      },
+      {
+        id: 8,
+        name: "Bombom Aberto de Morango",
+        category: "Doces",
+        price: 17.00,
+        description: "Morango, brigadeiro cremoso de leite ninho e ganache ao leite.",
+        image: "images/bombom aberto.jpg",
+        visible: true
+      },
+      {
+        id: 9,
+        name: "Camafeu de Nozes",
+        category: "Doces",
+        price: 4.50,
+        description: "Delicioso camafeu tradicional com nozes.",
+        image: "images/camafeu.jpg",
+        visible: true
+      },
+      {
+        id: 10,
+        name: "Bandeja Mix de Docinhos (8 un)",
+        category: "Kits",
+        price: 21.00,
+        description: "Paçoca, brulée, bicho de pé (morango), limão, Ninho com Nutella, churros, cajuzinho, beijinho e brigadeiro.",
+        image: "images/bandeja de morango.jpg",
+        visible: true
+      }
+    ];
+
+    // Carregar produtos do localStorage ou usar os padrão
+    function loadProducts() {
+      const savedProducts = localStorage.getItem('steConfeitariaProducts');
+      if (savedProducts) {
+        products = JSON.parse(savedProducts);
+        
+        // Garantir que todos os produtos padrão existam
+        defaultProducts.forEach(defaultProduct => {
+          const exists = products.some(p => p.id === defaultProduct.id);
+          if (!exists) {
+            products.push({
+              ...defaultProduct,
+              visible: true
+            });
+          }
+        });
+      } else {
+        products = [...defaultProducts];
+      }
+      saveProducts();
+      renderProducts();
+    }
+
+    // Salvar produtos no localStorage
+    function saveProducts() {
+      localStorage.setItem('steConfeitariaProducts', JSON.stringify(products));
+    }
+
+    // Renderizar lista de produtos
+    function renderProducts() {
+      const productsList = document.getElementById('products-list');
+      productsList.innerHTML = '';
+      
+      if (products.length === 0) {
+        productsList.innerHTML = `
+          <tr>
+            <td colspan="4" class="p-4 text-center text-gray-500">
+              Nenhum produto cadastrado.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // Ordenar produtos por categoria e nome
+      const sortedProducts = [...products].sort((a, b) => {
+        if (a.category === b.category) {
+          return a.name.localeCompare(b.name);
+        }
+        return a.category.localeCompare(b.category);
+      });
+      
+      sortedProducts.forEach(product => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-gray-50';
+        tr.innerHTML = `
+          <td class="p-3 font-medium">
+            <div class="flex items-center">
+              <img src="${product.image}" alt="${product.name}" class="w-12 h-12 object-cover rounded mr-3">
+              <div>
+                <div>${product.name}</div>
+                <div class="text-sm text-gray-500">${product.description}</div>
+              </div>
+            </div>
+          </td>
+          <td class="p-3">${product.category}</td>
+          <td class="p-3">R$ ${product.price.toFixed(2)}</td>
+          <td class="p-3">
+            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+              <input type="checkbox" id="toggle-${product.id}" 
+                     ${product.visible ? 'checked' : ''}
+                     class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                     data-id="${product.id}">
+              <label for="toggle-${product.id}" 
+                     class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+            </div>
+            <span class="${product.visible ? 'text-green-600' : 'text-red-600'}">
+              ${product.visible ? 'Visível' : 'Oculto'}
+            </span>
+          </td>
+        `;
+        productsList.appendChild(tr);
+        
+        // Adicionar evento ao toggle de visibilidade
+        document.getElementById(`toggle-${product.id}`).addEventListener('change', (e) => {
+          const productId = parseInt(e.target.getAttribute('data-id'));
+          const isVisible = e.target.checked;
+          toggleProductVisibility(productId, isVisible);
+        });
+      });
+    }
+
+    // Alternar visibilidade do produto
+    function toggleProductVisibility(id, isVisible) {
+      const productIndex = products.findIndex(p => p.id === id);
+      if (productIndex !== -1) {
+        products[productIndex].visible = isVisible;
+        saveProducts();
+        
+        // Atualizar apenas o item modificado para melhor performance
+        const statusElement = document.querySelector(`#toggle-${id}`).closest('td').querySelector('span');
+        statusElement.textContent = isVisible ? 'Visível' : 'Oculto';
+        statusElement.className = isVisible ? 'text-green-600' : 'text-red-600';
+      }
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProducts();
+    });
+  </script>
+</body>
+</html>

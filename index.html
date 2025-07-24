@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sté Confeitaria - Faça seu Pedido Online</title>
+  <!-- Tailwind CSS otimizado -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #FCE8E4 0%, #FFD6D6 100%);
+    }
+
+    .cart-item:hover {
+      background-color: #FFF5F3;
+    }
+
+    .remove-item:hover {
+      color: #B14444;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-[#FFF5F3] text-[#663333]">
+
+  <!-- Barra de Navegação -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center space-x-2">
+          <!-- Imagem corrigida -->
+          <img src="./ste-logo.png" alt="Logo Sté Confeitaria" class="h-10">
+          <span class="text-xl font-bold text-[#B14444]">Sté Cozinha Artesanal</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button id="cart-button" class="relative">
+            <i class="fas fa-shopping-cart text-2xl text-[#B14444]"></i>
+            <span id="cart-count"
+              class="absolute -top-2 -right-2 bg-[#B14444] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+          </button>
+          <a href="https://wa.me/5518996193899" target="_blank"
+            class="hidden md:block bg-[#B14444] text-white px-4 py-2 rounded-full hover:bg-[#a03838] transition">
+            <i class="fab fa-whatsapp mr-2"></i>Fale Conosco
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient py-12 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-3xl md:text-4xl font-bold text-[#B14444] mb-4">Faça seu pedido online</h1>
+      <p class="text-lg mb-6">Escolha seus produtos favoritos, finalize seu pedido e receba em casa!</p>
+      <div class="flex justify-center space-x-4">
+        <a href="#cardapio" class="bg-[#B14444] text-white px-6 py-2 rounded-full hover:bg-[#a03838] transition">
+          <i class="fas fa-utensils mr-2"></i>Ver Cardápio
+        </a>
+        <button id="view-cart-btn"
+          class="border-2 border-[#B14444] text-[#B14444] px-6 py-2 rounded-full hover:bg-[#B14444] hover:text-white transition">
+          <i class="fas fa-shopping-cart mr-2"></i>Ver Carrinho
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cardápio -->
+  <section id="cardapio" class="py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-2xl font-bold text-[#B14444] mb-8 text-center">Nosso Cardápio</h2>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Copo de Ferrero Rocher -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="images/copo de ferreiro rocher.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Copo Ferrero Rocher</h3>
+            <p class="text-gray-600 mb-4">Brigadeiro, amendoim, mousse de chocolate, nutella e brownie.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 17,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Copo Ferrero Rocher" data-price="17.00" data-category="Copos">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copo Ninho com Nutella -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/copo de uva.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Copo Ninho com Nutella</h3>
+            <p class="text-gray-600 mb-4">Creme de ninho, nutella, morango e uva verde sem semente.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 18,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Copo Ninho com Nutella" data-price="18.00" data-category="Copos">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coxinha de Morango com Ninho -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/coxinha de morango.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Coxinha de Morango com Ninho</h3>
+            <p class="text-gray-600 mb-4">Morango fresco envolvido no brigadeiro de ninho e enrolado no ninho.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 11,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Coxinha de Morango com Ninho" data-price="11.00" data-category="Doces">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Caixa Box Acrílico Bombom de Morango -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/caixa box.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Caixa Box Bombom de Morango</h3>
+            <p class="text-gray-600 mb-4">Ninho cremoso, morango, creme de chocolate, ganache ao leite e chantininho.
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 155,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Caixa Box Bombom de Morango" data-price="155.00" data-category="Caixas">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Morango do Amor -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/morango do amor.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Morango do Amor</h3>
+            <p class="text-gray-600 mb-4">Morango, brigadeiro de ninho e calda crocante.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 16,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Morango do Amor" data-price="16.00" data-category="Doces">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Espeto de Morango -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/spetinho de morango.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Espeto de Morango</h3>
+            <p class="text-gray-600 mb-4">Morango com chocolate ao leite nobre.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 16,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Espeto de Morango" data-price="16.00" data-category="Espetos">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Espeto de Uva -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/espetinho de uva.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Espeto de Uva</h3>
+            <p class="text-gray-600 mb-4">Uva com chocolate ao leite nobre.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 16,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Espeto de Uva" data-price="16.00" data-category="Espetos">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bombom Aberto de Morango -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/bombom aberto.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Bombom Aberto de Morango</h3>
+            <p class="text-gray-600 mb-4">Morango, brigadeiro cremoso de leite ninho e ganache ao leite.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 17,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Bombom Aberto de Morango" data-price="17.00" data-category="Doces">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Camafeu de Nozes -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/camafeu.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Camafeu de Nozes</h3>
+            <p class="text-gray-600 mb-4">Delicioso camafeu tradicional com nozes.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 4,50</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Camafeu de Nozes" data-price="4.50" data-category="Doces">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bandeja Mix de Docinhos -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+          <img src="./images/bandeja de morango.jpg" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">Bandeja Mix de Docinhos (8 un)</h3>
+            <p class="text-gray-600 mb-4">Paçoca, brulée, bicho de pé (morango), limão, Ninho com Nutella, churros,
+              cajuzinho, beijinho e brigadeiro.</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-lg text-[#B14444]">R$ 21,00</span>
+              <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition"
+                data-product="Bandeja Mix de Docinhos (8 un)" data-price="21.00" data-category="Kits">
+                <i class="fas fa-cart-plus mr-2"></i>Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Carrinho de Compras (Modal) -->
+  <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="absolute right-0 top-0 h-full w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg overflow-y-auto">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-[#B14444]">
+            <i class="fas fa-shopping-cart mr-2"></i>Seu Carrinho
+          </h2>
+          <button id="close-cart" class="text-gray-500 hover:text-[#B14444]">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+
+        <div id="cart-items" class="mb-6">
+          <!-- Itens do carrinho serão adicionados aqui dinamicamente -->
+          <p id="empty-cart-message" class="text-center text-gray-500 py-4">Seu carrinho está vazio</p>
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 mb-6">
+          <div class="flex justify-between mb-2">
+            <span>Subtotal:</span>
+            <span id="cart-subtotal">R$ 0,00</span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span>Taxa de Entrega:</span>
+            <span id="delivery-fee">A calcular</span>
+          </div>
+          <div class="flex justify-between font-bold text-lg">
+            <span>Total:</span>
+            <span id="cart-total">R$ 0,00</span>
+          </div>
+        </div>
+
+        <button id="checkout-btn"
+          class="w-full bg-[#B14444] text-white py-3 rounded-lg hover:bg-[#a03838] transition font-bold mb-4">
+          <i class="fas fa-credit-card mr-2"></i>Finalizar Pedido
+        </button>
+
+        <button id="continue-shopping"
+          class="w-full border border-[#B14444] text-[#B14444] py-3 rounded-lg hover:bg-[#FCE8E4] transition font-bold">
+          <i class="fas fa-arrow-left mr-2"></i>Continuar Comprando
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout (Modal) -->
+  <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="absolute right-0 top-0 h-full w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg overflow-y-auto">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-[#B14444]">
+            <i class="fas fa-clipboard-list mr-2"></i>Finalizar Pedido
+          </h2>
+          <button id="close-checkout" class="text-gray-500 hover:text-[#B14444]">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+
+        <form id="checkout-form">
+          <div class="mb-6">
+            <h3 class="text-lg font-bold mb-4 text-[#B14444]">
+              <i class="fas fa-user mr-2"></i>Seus Dados
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <label for="customer-name" class="block mb-1 font-medium">Nome completo*</label>
+                <input type="text" id="customer-name" name="customer-name" required
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+              </div>
+
+              <div>
+                <label for="customer-phone" class="block mb-1 font-medium">WhatsApp*</label>
+                <input type="tel" id="customer-phone" name="customer-phone" required
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+              </div>
+
+              <div>
+                <label for="customer-email" class="block mb-1 font-medium">E-mail</label>
+                <input type="email" id="customer-email" name="customer-email"
+                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-lg font-bold mb-4 text-[#B14444]">
+              <i class="fas fa-truck mr-2"></i>Entrega
+            </h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block mb-2 font-medium">Tipo de entrega*</label>
+                <div class="flex space-x-4">
+                  <label class="flex items-center">
+                    <input type="radio" name="delivery-type" value="delivery" checked class="mr-2">
+                    <span>Entrega em domicílio</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" name="delivery-type" value="pickup" class="mr-2">
+                    <span>Retirar no local</span>
+                  </label>
+                </div>
+              </div>
+
+              <div id="delivery-address-fields">
+                <div>
+                  <label for="delivery-address" class="block mb-1 font-medium">Endereço completo*</label>
+                  <input type="text" id="delivery-address" name="delivery-address"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+                </div>
+
+                <div>
+                  <label for="delivery-complement" class="block mb-1 font-medium">Complemento</label>
+                  <input type="text" id="delivery-complement" name="delivery-complement"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label for="delivery-neighborhood" class="block mb-1 font-medium">Bairro*</label>
+                    <input type="text" id="delivery-neighborhood" name="delivery-neighborhood"
+                      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+                  </div>
+                  <div>
+                    <label for="delivery-date" class="block mb-1 font-medium">Data de entrega*</label>
+                    <input type="date" id="delivery-date" name="delivery-date" required
+                      class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-lg font-bold mb-4 text-[#B14444]">
+              <i class="fas fa-money-bill-wave mr-2"></i>Pagamento
+            </h3>
+            <div class="space-y-2">
+              <label class="flex items-center p-2 border rounded-lg hover:bg-[#FFF5F3]">
+                <input type="radio" name="payment-method" value="PIX" checked class="mr-2">
+                <div>
+                  <span class="font-medium">PIX</span>
+                  <p class="text-sm text-gray-600">5% de desconto</p>
+                </div>
+              </label>
+
+              <label class="flex items-center p-2 border rounded-lg hover:bg-[#FFF5F3]">
+                <input type="radio" name="payment-method" value="Dinheiro" class="mr-2">
+                <div>
+                  <span class="font-medium">Dinheiro</span>
+                  <p class="text-sm text-gray-600">Troco para quanto?</p>
+                </div>
+              </label>
+
+              <label class="flex items-center p-2 border rounded-lg hover:bg-[#FFF5F3]">
+                <input type="radio" name="payment-method" value="Cartão de Crédito" class="mr-2">
+                <div>
+                  <span class="font-medium">Cartão de Crédito</span>
+                  <p class="text-sm text-gray-600">Até 3x sem juros</p>
+                </div>
+              </label>
+
+              <label class="flex items-center p-2 border rounded-lg hover:bg-[#FFF5F3]">
+                <input type="radio" name="payment-method" value="Cartão de Débito" class="mr-2">
+                <div>
+                  <span class="font-medium">Cartão de Débito</span>
+                  <p class="text-sm text-gray-600">1x no débito</p>
+                </div>
+              </label>
+            </div>
+
+            <div id="change-for-field" class="mt-4 hidden">
+              <label for="change-for" class="block mb-1 font-medium">Precisa de troco para quanto?</label>
+              <input type="text" id="change-for" name="change-for"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]">
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-lg font-bold mb-4 text-[#B14444]">
+              <i class="fas fa-sticky-note mr-2"></i>Observações
+            </h3>
+            <textarea id="order-notes" name="order-notes" rows="3"
+              placeholder="Alguma observação sobre seu pedido? Alergias, restrições, detalhes de entrega..."
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B14444]"></textarea>
+          </div>
+
+          <div class="border-t border-gray-200 pt-4 mb-6">
+            <div class="flex justify-between font-bold text-lg">
+              <span>Total do Pedido:</span>
+              <span id="checkout-total">R$ 0,00</span>
+            </div>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-[#B14444] text-white py-3 rounded-lg hover:bg-[#a03838] transition font-bold">
+            <i class="fab fa-whatsapp mr-2"></i>Enviar Pedido via WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <button id="admin-access-btn"
+    class="fixed bottom-4 left-4 bg-[#B14444] text-white p-3 rounded-full z-50 hover:bg-[#a03838] transition shadow-lg">
+    <i class="fas fa-lock"></i> Admin
+  </button>
+  <!-- Rodapé -->
+  <footer class="bg-[#663333] text-white py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <img src="./ste-logo.png" alt="Logo Sté Confeitaria" class="h-10 mr-2">
+            <span class="text-xl font-bold">Sté Cozinha Artesanal</span>
+          </div>
+          <p class="mb-4">Doces artesanais premium feitos com ingredientes selecionados e muito amor.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white hover:text-[#FCE8E4] transition">
+              <i class="fab fa-instagram text-xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-[#FCE8E4] transition">
+              <i class="fab fa-facebook text-xl"></i>
+            </a>
+            <a href="https://wa.me/5518996193899" class="text-white hover:text-[#FCE8E4] transition">
+              <i class="fab fa-whatsapp text-xl"></i>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold mb-4">Contato</h3>
+          <p class="mb-2 flex items-center">
+            <i class="fas fa-map-marker-alt mr-2"></i> Presidente Epitácio - SP
+          </p>
+          <p class="mb-2 flex items-center">
+            <i class="fab fa-whatsapp mr-2"></i> (18) 99999-9999
+          </p>
+          <p class="flex items-center">
+            <i class="fas fa-envelope mr-2"></i> contato@steconfeitaria.com
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-[#B14444] mt-8 pt-8 text-center text-sm">
+        <p>© 2025 Sté Confeitaria. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  // Carrinho de compras
+  let cart = [];
+
+  // Elementos do DOM
+  const cartModal = document.getElementById('cart-modal');
+  const checkoutModal = document.getElementById('checkout-modal');
+  const cartButton = document.getElementById('cart-button');
+  const viewCartBtn = document.getElementById('view-cart-btn');
+  const closeCart = document.getElementById('close-cart');
+  const closeCheckout = document.getElementById('close-checkout');
+  const continueShopping = document.getElementById('continue-shopping');
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const cartItems = document.getElementById('cart-items');
+  const emptyCartMessage = document.getElementById('empty-cart-message');
+  const cartSubtotal = document.getElementById('cart-subtotal');
+  const cartTotal = document.getElementById('cart-total');
+  const checkoutTotal = document.getElementById('checkout-total');
+  const cartCount = document.getElementById('cart-count');
+  const checkoutForm = document.getElementById('checkout-form');
+
+  // Produtos padrão
+  const defaultProducts = [
+    {
+      id: 1,
+      name: "Copo Ferrero Rocher",
+      category: "Copos",
+      price: 17.00,
+      description: "Brigadeiro, amendoim, mousse de chocolate, nutella e brownie.",
+      image: "images/copo de ferreiro rocher.jpg",
+      visible: true
+    },
+    {
+      id: 2,
+      name: "Copo Ninho com Nutella",
+      category: "Copos",
+      price: 18.00,
+      description: "Creme de ninho, nutella, morango e uva verde sem semente.",
+      image: "images/copo de uva.jpg",
+      visible: true
+    },
+    {
+      id: 3,
+      name: "Coxinha de Morango com Ninho",
+      category: "Doces",
+      price: 11.00,
+      description: "Morango fresco envolvido no brigadeiro de ninho e enrolado no ninho.",
+      image: "images/coxinha de morango.jpg",
+      visible: true
+    },
+    {
+      id: 4,
+      name: "Caixa Box Bombom de Morango",
+      category: "Caixas",
+      price: 155.00,
+      description: "Ninho cremoso, morango, creme de chocolate, ganache ao leite e chantininho.",
+      image: "images/caixa box.jpg",
+      visible: true
+    },
+    {
+      id: 5,
+      name: "Morango do Amor",
+      category: "Doces",
+      price: 16.00,
+      description: "Morango, brigadeiro de ninho e calda crocante.",
+      image: "images/morango do amor.jpg",
+      visible: true
+    },
+    {
+      id: 6,
+      name: "Espeto de Morango",
+      category: "Espetos",
+      price: 16.00,
+      description: "Morango com chocolate ao leite nobre.",
+      image: "images/spetinho de morango.jpg",
+      visible: true
+    },
+    {
+      id: 7,
+      name: "Espeto de Uva",
+      category: "Espetos",
+      price: 16.00,
+      description: "Uva com chocolate ao leite nobre.",
+      image: "images/espetinho de uva.jpg",
+      visible: true
+    },
+    {
+      id: 8,
+      name: "Bombom Aberto de Morango",
+      category: "Doces",
+      price: 17.00,
+      description: "Morango, brigadeiro cremoso de leite ninho e ganache ao leite.",
+      image: "images/bombom aberto.jpg",
+      visible: true
+    },
+    {
+      id: 9,
+      name: "Camafeu de Nozes",
+      category: "Doces",
+      price: 4.50,
+      description: "Delicioso camafeu tradicional com nozes.",
+      image: "images/camafeu.jpg",
+      visible: true
+    },
+    {
+      id: 10,
+      name: "Bandeja Mix de Docinhos (8 un)",
+      category: "Kits",
+      price: 21.00,
+      description: "Paçoca, brulée, bicho de pé (morango), limão, Ninho com Nutella, churros, cajuzinho, beijinho e brigadeiro.",
+      image: "images/bandeja de morango.jpg",
+      visible: true
+    }
+  ];
+
+  // Inicialização
+  document.addEventListener('DOMContentLoaded', function() {
+    setupDatePicker();
+    loadVisibleProducts();
+    setupEventListeners();
+  });
+
+  // Configurar data mínima para entrega
+  function setupDatePicker() {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    const minDate = yyyy + '-' + mm + '-' + dd;
+
+    document.getElementById('delivery-date').min = minDate;
+    document.getElementById('delivery-date').value = minDate;
+  }
+
+  // Configurar event listeners
+  function setupEventListeners() {
+    // Carrinho
+    cartButton.addEventListener('click', () => cartModal.classList.remove('hidden'));
+    viewCartBtn.addEventListener('click', () => cartModal.classList.remove('hidden'));
+    closeCart.addEventListener('click', () => cartModal.classList.add('hidden'));
+    closeCheckout.addEventListener('click', () => checkoutModal.classList.add('hidden'));
+    continueShopping.addEventListener('click', () => cartModal.classList.add('hidden'));
+    checkoutBtn.addEventListener('click', () => {
+      cartModal.classList.add('hidden');
+      checkoutModal.classList.remove('hidden');
+    });
+
+    // Pagamento
+    document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const changeForField = document.getElementById('change-for-field');
+        changeForField.classList.toggle('hidden', this.value !== 'Dinheiro');
+      });
+    });
+
+    // Entrega
+    document.querySelectorAll('input[name="delivery-type"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const addressFields = document.getElementById('delivery-address-fields');
+        addressFields.style.display = this.value === 'delivery' ? 'block' : 'none';
+      });
+    });
+
+    // Formulário de checkout
+    checkoutForm.addEventListener('submit', submitOrder);
+  }
+
+  // Carregar produtos visíveis
+  function loadVisibleProducts() {
+    const savedProducts = localStorage.getItem('steConfeitariaProducts');
+    let visibleProducts = [];
+    
+    if (savedProducts) {
+      const allProducts = JSON.parse(savedProducts);
+      visibleProducts = allProducts.filter(product => product.visible !== false);
+    } else {
+      visibleProducts = defaultProducts.filter(product => product.visible !== false);
+    }
+
+    renderProducts(visibleProducts);
+  }
+
+  // Renderizar produtos no cardápio
+  function renderProducts(products) {
+    const productsContainer = document.querySelector('#cardapio .grid');
+    productsContainer.innerHTML = '';
+
+    products.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.className = 'bg-white rounded-xl shadow-md overflow-hidden product-card';
+      productCard.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+          <p class="text-gray-600 mb-4">${product.description}</p>
+          <div class="flex justify-between items-center">
+            <span class="font-bold text-lg text-[#B14444]">R$ ${product.price.toFixed(2)}</span>
+            <button class="add-to-cart bg-[#B14444] text-white px-4 py-2 rounded-lg hover:bg-[#a03838] transition" 
+                    data-product="${product.name}" data-price="${product.price}" data-category="${product.category}">
+              <i class="fas fa-cart-plus mr-2"></i>Adicionar
+            </button>
+          </div>
+        </div>
+      `;
+      productsContainer.appendChild(productCard);
+    });
+
+    // Adicionar eventos aos botões "Adicionar ao carrinho"
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', addToCart);
+    });
+  }
+
+  // Adicionar produto ao carrinho
+  function addToCart() {
+    const product = this.getAttribute('data-product');
+    const price = parseFloat(this.getAttribute('data-price'));
+    const category = this.getAttribute('data-category');
+
+    const existingItem = cart.find(item => item.product === product);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        product,
+        price,
+        category,
+        quantity: 1
+      });
+    }
+
+    updateCartDisplay();
+    cartModal.classList.remove('hidden');
+  }
+
+  // Atualizar exibição do carrinho
+  function updateCartDisplay() {
+    cartItems.innerHTML = '';
+
+    if (cart.length === 0) {
+      emptyCartMessage.style.display = 'block';
+      cartSubtotal.textContent = 'R$ 0,00';
+      cartTotal.textContent = 'R$ 0,00';
+      checkoutTotal.textContent = 'R$ 0,00';
+      cartCount.textContent = '0';
+      return;
+    }
+
+    emptyCartMessage.style.display = 'none';
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+      subtotal += item.price * item.quantity;
+
+      const itemElement = document.createElement('div');
+      itemElement.className = 'cart-item flex justify-between items-center p-3 border-b';
+      itemElement.innerHTML = `
+        <div>
+          <h4 class="font-medium">${item.product}</h4>
+          <p class="text-sm text-gray-600">${item.category}</p>
+          <div class="flex items-center mt-1">
+            <button class="decrease-quantity text-[#B14444] px-2" data-index="${index}">-</button>
+            <span class="quantity mx-2">${item.quantity}</span>
+            <button class="increase-quantity text-[#B14444] px-2" data-index="${index}">+</button>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="font-bold">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</p>
+          <p class="text-sm">R$ ${item.price.toFixed(2).replace('.', ',')} cada</p>
+          <button class="remove-item text-xs text-gray-500 mt-1" data-index="${index}">
+            <i class="fas fa-trash mr-1"></i>Remover
+          </button>
+        </div>
+      `;
+      cartItems.appendChild(itemElement);
+    });
+
+    // Atualizar totais
+    const total = calculateTotal();
+    cartSubtotal.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    cartTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    checkoutTotal.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+
+    // Configurar eventos dos botões do carrinho
+    setupCartItemButtons();
+  }
+
+  // Configurar eventos dos botões do carrinho
+  function setupCartItemButtons() {
+    document.querySelectorAll('.increase-quantity').forEach(button => {
+      button.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        cart[index].quantity += 1;
+        updateCartDisplay();
+      });
+    });
+
+    document.querySelectorAll('.decrease-quantity').forEach(button => {
+      button.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        if (cart[index].quantity > 1) {
+          cart[index].quantity -= 1;
+        } else {
+          cart.splice(index, 1);
+        }
+        updateCartDisplay();
+      });
+    });
+
+    document.querySelectorAll('.remove-item').forEach(button => {
+      button.addEventListener('click', function() {
+        const index = parseInt(this.getAttribute('data-index'));
+        cart.splice(index, 1);
+        updateCartDisplay();
+      });
+    });
+  }
+
+  // Calcular total do pedido
+  function calculateTotal() {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
+
+  // Formatar data para exibição
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+  }
+
+  // Enviar pedido
+  function submitOrder(e) {
+    e.preventDefault();
+
+    try {
+      // Validar campos obrigatórios
+      const name = document.getElementById('customer-name').value;
+      const phone = document.getElementById('customer-phone').value;
+      const deliveryDate = document.getElementById('delivery-date').value;
+
+      if (!name || !phone || !deliveryDate) {
+        throw new Error('Por favor, preencha todos os campos obrigatórios!');
+      }
+
+      // Obter dados do formulário
+      const email = document.getElementById('customer-email').value;
+      const deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+      const notes = document.getElementById('order-notes').value;
+
+      // Validar endereço se for entrega
+      let addressInfo = '';
+      if (deliveryType === 'delivery') {
+        const address = document.getElementById('delivery-address').value;
+        const complement = document.getElementById('delivery-complement').value;
+        const neighborhood = document.getElementById('delivery-neighborhood').value;
+
+        if (!address || !neighborhood) {
+          throw new Error('Por favor, preencha o endereço completo para entrega!');
+        }
+
+        addressInfo = `${address}${complement ? ', ' + complement : ''}, ${neighborhood}`;
+      }
+
+      // Construir mensagem do pedido
+      let message = `*🍰 NOVO PEDIDO - Sté Confeitaria* 🎂\n\n`;
+      message += `*👤 Cliente:* ${name}\n`;
+      message += `*📱 WhatsApp:* ${phone}\n`;
+      message += `*📧 E-mail:* ${email || 'Não informado'}\n\n`;
+
+      message += `*🛒 ITENS DO PEDIDO:*\n`;
+      cart.forEach(item => {
+        message += `➡️ ${item.product} (${item.quantity}x) - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
+      });
+      message += `\n*💰 Total: R$ ${calculateTotal().toFixed(2).replace('.', ',')}*\n\n`;
+
+      message += `*🚚 INFORMAÇÕES DE ENTREGA:*\n`;
+      message += `📍 *Tipo:* ${deliveryType === 'delivery' ? 'Entrega em domicílio' : 'Retirada no local'}\n`;
+      if (deliveryType === 'delivery') {
+        message += `🏠 *Endereço:* ${addressInfo}\n`;
+      }
+      message += `📅 *Data:* ${formatDate(deliveryDate)}\n\n`;
+
+      message += `*💳 FORMA DE PAGAMENTO:*\n`;
+      message += `🔹 ${paymentMethod}\n`;
+      if (paymentMethod === 'Dinheiro' && document.getElementById('change-for').value) {
+        message += `💰 *Troco para:* R$ ${document.getElementById('change-for').value}\n`;
+      }
+
+      if (notes) {
+        message += `\n*📝 OBSERVAÇÕES:*\n${notes}\n`;
+      }
+
+      // Codificar mensagem para URL
+      const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A');
+      const whatsappNumber = '5518996193899';
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Abrir em nova aba
+      window.open(whatsappUrl, '_blank');
+
+      // Limpar carrinho após envio
+      cart = [];
+      updateCartDisplay();
+      checkoutModal.classList.add('hidden');
+
+      // Feedback para o usuário
+      alert('Pedido enviado com sucesso! Você será redirecionado para o WhatsApp.');
+
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+</script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  <!-- No seu footer ou em outro local apropriado -->
+  <a href="admin.html"
+    class="fixed bottom-4 left-4 bg-gray-700 text-white p-3 rounded-full z-50 hover:bg-gray-800 transition">
+    <i class="fas fa-lock"></i> Área Admin
+  </a>
+  
+
+</body>
+
+</html>
